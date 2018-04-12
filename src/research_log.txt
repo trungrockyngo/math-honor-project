@@ -1,0 +1,12 @@
+Log:
+
+- Optimization ideas:
++ Speed up data processing in Python:
+https://medium.com/@ageitgey/quick-tip-speed-up-your-python-data-processing-scripts-with-process-pools-cf275350163a
++
+https://www.tutorialspoint.com/sqlite/sqlite_python.htm
+
+- Use the tool "screen" - man screen for scheduling the process to be run offline.
+https://www.tecmint.com/screen-command-examples-to-manage-linux-terminals
+
+End-to-end testing maybe???---https://github.com/lucianopuccio/golem
