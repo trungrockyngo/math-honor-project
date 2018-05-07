@@ -1,50 +1,14 @@
+import sys
 import random as ran
-import numpy as np
 import math
-'''
-ideas:
-    Partion orginal seq into k (simulator's paramater) equally divided chunks
+import decimal as dec
 
-    For each conditional prob at chunk a_i
-        compute estimate[i] = P( s(x) > a_i | s(x) > a_(i - 1)) is done by calling
-
-        if i == 0: a bit different yet simpler to calculate estimate[0]
-        the HM-counting (OOP refactoring!!!) except
-            - no watch state
-            - a_i-1 becomes new target and just count cnt1 when s(x) > a_i-1
-                if s(x) > a_i update cnt2
-        -> estimate[i] = cnt2/ cnt1
-    chunk = 1000
-
-    for i = 1 -> nITer:
-        for j = 0 -> N:
-            if i mod chunk == 0:
-                if S(X) > a[i-1]:
-                    cnt2 ++
-                    potSeq = genState(curSeq)
-
-                    alpha = computeAlpha(degree(curSeq), degree(potSeq))
-                    U = rand(0,1)
-
-                    if alpha < U:
-                        curSeq = potSeq
-                    if alpha > U:
-                        nextSeq = curSeq
-                if S(X) > a[i]:
-                    cnt1 ++
-                estimate = cnt1/ cn2
-
-    multiple all estimates
-
-
-'''
-
-def isValid(seq, target):
+ef isValid(seq, target):
     sum = 0
     for i in xrange(len(seq)):
-        sum += i*seq[i]
+        sum += (i+1) * seq[i]
     # print '------ Checking if current sequence is valid -----'
-    # print 'Index-weighted sum of current sequence is {0}, target is {1}'.format(sum, target)
+    print 'Index-weighted sum of current sequence is {0}, target is {1}'.format(sum, target)
     return (sum > target)
 
 def degree(seq, target):
@@ -98,11 +62,10 @@ def partition(N, T, k):
     parts = list()
     i = 0
 
-    # minSeq = [0] * N
     minTarget = 0
     for i in xrange(N):
         minTarget += i * (N - i)
-    # print "The min target: %d" %minTarget
+    print "The min target: %d" %minTarget
 
     # Need improvement: partitioning supports float-sized (i.e. N % k != 0) chunks
     # if T % k == 0:
@@ -121,46 +84,75 @@ def initMaxSeq(N):
     return maxSeq
 
 
-def conditioning_simulator(N, k, target, nIter):
+def conditioning_simulator(N, steps, target, nIter):
+    print "The HM conditional simulation with the given paramaters"
+    print "Size: %d. Each stepsize: %d. Target: %d. Number of runs: %d" %(N, steps, target, nIter)
     maxSeq = initMaxSeq(N)
 
-    parts = partition(N, target, k)
+    parts = partition(N, target, k=steps)
     print parts
     curSeq = list(maxSeq)
 
     # '''
-    prodRes = 1.0 # result of multiples of probablities
+    prodRes = float(1.0) # result of multiples of probablities
+    prodList = list()
+
     for i in xrange(len(parts) - 1):
         # print "Current target is %d" %parts[i]
+        prodRes = float(1.0)
         cnt1 = 0
         cnt2 = 0
+
+        j = 0
         for j in xrange(nIter):
-            if isValid(curSeq, parts[i]):
-                cnt1 += 1
-                potSeq = genState(maxSeq, parts[i])
+            #DEBUG: force to generate the valid curSeq
+            while (not isValid(curSeq, parts[i])):
+                curSeq = genState(curSeq, parts[i])
+            # print "Current valid sequence is as below: "
+            # print curSeq
 
-                alpha = computeAlpha(curSeq, maxSeq, parts[i])
-                U = ran.random()
+            cnt1 += 1
+            potSeq = genState(maxSeq, parts[i])
+            alpha = computeAlpha(curSeq, maxSeq, parts[i])
+            U = ran.random()
 
-                if alpha < U:
-                    nextSeq = potSeq
-                else:
-                    nextSeq = curSeq
-                curSeq = nextSeq
+            if alpha < U:
+                nextSeq = potSeq
+            else:
+                nextSeq = curSeq
+            curSeq = nextSeq
 
-                if isValid(curSeq, parts[i+1]):
-                    cnt2 += 1
-                estimate = float(cnt2)/float(cnt1)
-                # print 'Conditional counting is %f. Total counting is %f ' %(cnt2, cnt1)
-                print 'The probablity between of consecutive conditioning is currently %f' %estimate
-                prodRes = float(prodRes) * float(estimate)
-                print 'The probablity is currently %f' %prodRes
+            if isValid(curSeq, parts[i+1]):
+                cnt2 += 1
 
+            estimate = float(cnt2)/float(cnt1)
+            # print 'For the step of %d At the iteration %d The cnt1: %d, and the cnt2: %d' %(parts[i], j, cnt1, cnt2)
+            # print estimate
+            # prodRes = dec.Decimal(prodRes) * dec.Decimal(estimate)
+            # probList.append(estimate)
+
+        # prodRes = float(prodRes) * float(estimate)
+        prodList.append(estimate)
+        # if j == nIter - 1:
+        print "For the step of %d, the estimate at the final iteration %d is %f" %(parts[i], j, estimate)
+
+    # print prodList
     print '------ The end result of conditioning Gibb''s sampling algorithm -----'
+    for i in xrange(0, len(prodList)):
+        prodRes *= prodList[i]
+
     print 'The product result: %f' %prodRes
-    print 'The long-term number of states is %d' %(1/prodRes)
-    # '''
+    print 'The long-term number of states is %d\n' %(1/prodRes)
+
 if __name__ == "__main__":
+    args = sys.argv
+    print args
+    dec.getcontext().prec = 2
+
     # conditioning_simulator()
-    conditioning_simulator(N=10, k=5, target=300, nIter=1000)
-    # conditioning_simulator(N=10, k=30, target=300, nIter=100000)
+    # First initial test: N = 7, steps = 10, target = 100, nIter = 1000
+    conditioning_simulator(N=int(args[1]), steps=int(args[2]), target=int(args[3]), nIter=int(args[4]))
+    # conditioning_simulator(N=10, steps=5, target=300, nIter=1000)
+    # conditioning_simulator(N=10, steps=5, target=300, nIter=100000)
+    # conditioning_simulator(N=10, steps=5, target=300, nIter=1000000)
+    # conditioning_simulator(N=15, steps=5, target=300, nIter=100000)

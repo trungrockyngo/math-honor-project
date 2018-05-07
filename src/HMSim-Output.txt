@@ -1,0 +1,12 @@
+['HMSim.py', '10', '340', '100000']
+The min target: 165
+--------- Generating the list of watch sequences ---------
+--------- The watch list of size 9 contains -------- 
+[[1, 2, 3, 4, 5, 6, 7, 10, 8, 9], [1, 2, 3, 4, 5, 6, 10, 7, 8, 9], [1, 2, 3, 4, 5, 10, 6, 7, 8, 9], [1, 2, 3, 4, 10, 5, 6, 7, 8, 9], [1, 2, 3, 10, 4, 5, 6, 7, 8, 9], [1, 2, 10, 3, 4, 5, 6, 7, 8, 9], [1, 10, 2, 3, 4, 5, 6, 7, 8, 9], [10, 1, 2, 3, 4, 5, 6, 7, 8, 9], [10, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
+----------- Hit!!! -------------
+----------- Hit!!! -------------
+----------- Hit!!! -------------
+----------- Hit!!! -------------
+------ The end result of Hasting-Metropolis algorithm -----
+The number of times it hits on watch state is 4 over total of 100000
+The number of states in the long run is 225000.0

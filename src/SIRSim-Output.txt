@@ -1,0 +1,2 @@
+------ The end result of SIR algorithm -----
+watchCnt is 0 over nIter 1000

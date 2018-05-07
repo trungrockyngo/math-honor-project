@@ -1,0 +1,25 @@
+['BruteForceSim.py', '7', '100']
+---- The maximal sum- used to parameterize the target: 140 ----
+The whole permulation list is as followed
+The number of states as computed brute-forcely is 17781
+
+['BruteForceSim.py', '10', '340']
+The number of states as computed brute-forcely is 324089 (it's about 9% over 10! permutations)
+
+
+['HMSim.py', '7', '100', '10000']
+The watch sequence is [1, 3, 5, 4, 6, 2, 7]
+------ The end result of Hasting-Metropolis algorithm -----
+The number of times it hits on watch state is 23 over total of 10000
+The number of states in the long run is 434.782608696
+
+['HMSim.py', '7', '100', '1000000']
+The watch sequence is [3, 2, 1, 4, 5, 6, 7]
+------ The end result of Hasting-Metropolis algorithm -----
+The number of times it hits on watch state is 2371 over total of 1000000
+The number of states in the long run is 421.762969211
+
+['SIRSim.py', '7', '100', '1000', '50']
+------ The end result of SIR algorithm -----
+watchCnt is 4 over nIter 1000
+In the long run probablity, which is 0.004000, the number of states is 250

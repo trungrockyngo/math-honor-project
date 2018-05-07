@@ -1,0 +1,23 @@
+The HM conditional simulation with the given paramaters
+Size: 10. Each stepsize: 5. Target: 300. Number of runs: 1000
+[180, 240, 300]
+For the step of 180, the estimate at the final iteration 999 is 0.500000
+For the step of 240, the estimate at the final iteration 999 is 0.035000
+------ The end result of conditioning Gibbs sampling algorithm -----
+The product result: 0.017500
+
+The HM conditional simulation with the given paramaters
+Size: 10. Each stepsize: 5. Target: 300. Number of runs: 100000
+[180, 240, 300]
+For the step of 180, the estimate at the final iteration 99999 is 0.500000
+For the step of 240, the estimate at the final iteration 99999 is 0.041510
+------ The end result of conditioning Gibbs sampling algorithm -----
+The product result: 0.020755
+
+The HM conditional simulation with the given paramaters
+Size: 10. Each stepsize: 5. Target: 300. Number of runs: 1000000
+[180, 240, 300]
+For the step of 180, the estimate at the final iteration 999999 is 0.500000
+For the step of 240, the estimate at the final iteration 999999 is 0.040816
+------ The end result of conditioning Gibbs sampling algorithm -----
+The product result: 0.020408

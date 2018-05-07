@@ -1,0 +1,49 @@
+Log:
+
+- Optimization ideas:
++ Speed up data processing in Python:
+https://medium.com/@ageitgey/quick-tip-speed-up-your-python-data-processing-scripts-with-process-pools-cf275350163a
++
+https://www.tutorialspoint.com/sqlite/sqlite_python.htm
+
+- Use the tool "screen" - man screen for scheduling the process to be run offline.
+https://www.tecmint.com/screen-command-examples-to-manage-linux-terminals
+
+
+'''
+ideas:
+    Partion orginal seq into k (simulator's paramater) equally divided chunks
+
+    For each conditional prob at chunk a_i
+        compute estimate[i] = P( s(x) > a_i | s(x) > a_(i - 1)) is done by calling
+
+        if i == 0: a bit different yet simpler to calculate estimate[0]
+        the HM-counting (OOP refactoring!!!) except
+            - no watch state
+            - a_i-1 becomes new target and just count cnt1 when s(x) > a_i-1
+                if s(x) > a_i update cnt2
+        -> estimate[i] = cnt2/ cnt1
+    chunk = 1000
+
+    for i = 1 -> nITer:
+        for j = 0 -> N:
+            if i mod chunk == 0:
+                if S(X) > a[i-1]:
+                    cnt2 ++
+                    potSeq = genState(curSeq)
+
+                    alpha = computeAlpha(degree(curSeq), degree(potSeq))
+                    U = rand(0,1)
+
+                    if alpha < U:
+                        curSeq = potSeq
+                    if alpha > U:
+                        nextSeq = curSeq
+                if S(X) > a[i]:
+                    cnt1 ++
+                estimate = cnt1/ cn2
+
+    multiple all estimates
+'''
+
+End-to-end testing maybe???---https://github.com/lucianopuccio/golem

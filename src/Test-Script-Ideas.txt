@@ -1,0 +1,15 @@
+# Testing ideas
+
+                            Brute Force                 HM                  Conditioning              SIR
+
+N              7
+Target        100                                     nIter 100,000
+                            states: 4149              225000
+
+                                                      nIter 1000,000
+
+N             10            states: 324089
+Target        340
+
+N             30
+Target
